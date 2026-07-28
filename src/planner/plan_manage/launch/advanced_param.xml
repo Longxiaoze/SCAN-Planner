@@ -15,7 +15,7 @@
   <!-- public parameters -->
   <arg name="max_vel" default="0.75"/>
   <arg name="max_acc" default="0.5"/>
-  <arg name="planning_horizon" default="7.5"/>
+  <arg name="planning_horizon" default="3.5"/>
 
   <!-- main node -->
   <node pkg="scan_planner" name="scan_planner_node" type="scan_planner_node" output="screen" clear_params="true">
@@ -46,7 +46,8 @@
     <param name="grid_map/double_cylinder_radius" value="0.25" />
     <param name="grid_map/double_cylinder_offset" value="0.18" />
     <param name="grid_map/obstacles_inflation_z_up" value="0.1" />
-    <param name="grid_map/obstacles_inflation_z_down" value="0.4" />
+    <param name="grid_map/obstacles_inflation_z_down" value="0.1" />
+    <param name="grid_map/body_height" value="0.4" />
 
     <!-- depth camera intrinsics -->
     <param name="grid_map/cx" value="$(arg cx)"/>

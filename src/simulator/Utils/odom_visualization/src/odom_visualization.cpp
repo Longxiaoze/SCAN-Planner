@@ -121,12 +121,20 @@ void odom_callback(const nav_msgs::Odometry::ConstPtr& msg)
   velPub.publish(velROS);
 
   // Path
-  static ros::Time prevt = msg->header.stamp;
-  if ((msg->header.stamp - prevt).toSec() > 0.1)
+  static bool has_last_path_pose = false;
+  static geometry_msgs::Point last_path_position;
+  const geometry_msgs::Point& curr_path_position = poseROS.pose.position;
+  const double dx = curr_path_position.x - last_path_position.x;
+  const double dy = curr_path_position.y - last_path_position.y;
+  const double dz = curr_path_position.z - last_path_position.z;
+  if (!has_last_path_pose || dx * dx + dy * dy + dz * dz > 0.25)
   {
-    prevt = msg->header.stamp;
     pathROS.header = poseROS.header;
     pathROS.poses.push_back(poseROS);
+    last_path_position = curr_path_position;
+    has_last_path_pose = true;
+    while (pathROS.poses.size() > 1000)
+      pathROS.poses.erase(pathROS.poses.begin());
     pathPub.publish(pathROS);
   }
 

@@ -55,6 +55,7 @@
   <!-- use simulator -->
   <include file="$(find scan_planner)/launch/simulator.xml">
     <arg name="is_real_world" value="$(arg is_real_world)" />
+    <arg name="navi_mode" value="$(arg navi_mode)" />
     <arg name="sensor_type" value="$(arg sensor_type)" />
   </include>
 
